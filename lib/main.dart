@@ -1,3 +1,5 @@
+// ignore: unused_import
+import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,15 +13,15 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     const title = 'Welcome to Hello World!';
     const heading = Text('Welcome to Hello World!');
-    const message = Text('Hello There! Center material widget.');
+    final message = WordPair.random();
     return MaterialApp(
       title: title,
       home: Scaffold(
           appBar: AppBar(
             title: heading,
           ),
-          body: const Center(
-            child: message,
+          body: Center(
+            child: Text(message.asPascalCase),
           )),
     );
   }
