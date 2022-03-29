@@ -13,16 +13,30 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     const title = 'Welcome to Hello World!';
     const heading = Text('Welcome to Hello World!');
-    final message = WordPair.random();
     return MaterialApp(
       title: title,
       home: Scaffold(
           appBar: AppBar(
             title: heading,
           ),
-          body: Center(
-            child: Text(message.asPascalCase),
+          body: const Center(
+            child: RandomWords(),
           )),
     );
+  }
+}
+
+class RandomWords extends StatefulWidget {
+  const RandomWords({Key? key}) : super(key: key);
+
+  @override
+  State<RandomWords> createState() => _RandomWordsState();
+}
+
+class _RandomWordsState extends State<RandomWords> {
+  @override
+  Widget build(BuildContext context) {
+    final wordPair = WordPair.random();
+    return Text(wordPair.asPascalCase);
   }
 }
