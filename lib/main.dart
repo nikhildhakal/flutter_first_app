@@ -11,17 +11,10 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const title = 'Welcome to Hello World!';
-    const heading = Text('Welcome to Hello World!');
-    return MaterialApp(
+    const title = 'Welcome to Name Generator!';
+    return const MaterialApp(
       title: title,
-      home: Scaffold(
-          appBar: AppBar(
-            title: heading,
-          ),
-          body: const Center(
-            child: RandomWords(),
-          )),
+      home: RandomWords(), //Replace with Widget created below
     );
   }
 }
@@ -34,9 +27,31 @@ class RandomWords extends StatefulWidget {
 }
 
 class _RandomWordsState extends State<RandomWords> {
+  final _suggestions = <WordPair>[];
+  final _biggerFont = const TextStyle(fontSize: 18.0);
   @override
   Widget build(BuildContext context) {
-    final wordPair = WordPair.random();
-    return Text(wordPair.asPascalCase);
+    var scaffold = Scaffold(
+        appBar: AppBar(
+          title: const Text('Startup Name Generator'),
+        ),
+        // Add a ListView.builder widget to display the suggested word pairing.
+        body: ListView.builder(
+          padding: const EdgeInsets.all(16.0),
+          itemBuilder: (BuildContext context, int i) {
+            // Add a one-pixel-high divider widget
+            if (i.isOdd) return const Divider();
+            // The expression i ~/ 2 divides i by 2 and returns an integer result
+            final index = i ~/ 2;
+            // If reached the end of the available word pairings, then generate 10 more and add them to the suggestions list
+            if (index >= _suggestions.length) {
+              _suggestions.addAll(generateWordPairs().take(10));
+            }
+            return ListTile(
+                title:
+                    Text(_suggestions[index].asPascalCase, style: _biggerFont));
+          },
+        ));
+    return scaffold;
   }
 }
